@@ -1,91 +1,99 @@
 # Stepwise Architect
 
-A free, open-source project adviser for indie builders working in **Claude Code, Codex and Gemini CLI**. Choose tools for the step you are doing now, keep project decisions, and compare total costs before adding another subscription.
+A free **Claude Code skill with a Rust core** for indie builders. It reads your project context, helps choose a tool for the current task, compares costs and saves decisions or reusable prompts.
 
-**0.1.0 is an experimental local alpha.** It provides a curated tool shortlist, workflows, project memory and a cost calculator through a CLI and eight MCP tools. Your coding assistant supplies reasoning, code inspection and live research. The core does not call a model or require another model API key.
+Instructions live in `skills/project-adviser/SKILL.md`. Rust handles the local commands. Claude supplies reasoning, code inspection and live research through the tools available in its session. The Claude skill needs **no Node, MCP server or extra model API key**.
 
-## Try it in two minutes
+**Version 0.2.0 is an experimental alpha.** The earlier optional Node MCP bridge remains available for Codex, Gemini CLI and existing integrations. It is separate from the Rust skill.
 
-Requires Node.js 22 or newer and npm. Download this repository or clone it, then open its directory:
+## Try Rust
 
-```sh
-npm ci --ignore-scripts
-npm run demo
-npm test
-```
-
-The demo recommends a review workflow for an indie SaaS. To compare hypothetical costs:
+Install a current stable Rust toolchain, clone the repository, and run from its directory:
 
 ```sh
-node bin/stepwise.mjs compare-costs --file examples/costs.json
+cargo build --release --locked
+./target/release/stepwise demo
+cargo test --locked
 ```
 
-The example produces **160 current, 115 proposed, 45 estimated monthly saving in USD**, with 60 switching cost and about 1.33 months payback. These are invented demonstration inputs, not vendor prices or verified savings.
+The executable embeds the initial catalog and workflows and runs from any directory. Use `--catalog /absolute/catalog.json` to select an explicitly reviewed local update.
 
-## Use it on your product
+## Use the Claude Code skill
 
-Create a project profile from `examples/seo-project.json`, change the fields to your actual project, then use an explicit existing project path:
+After building, launch the source plugin:
 
 ```sh
-node bin/stepwise.mjs init --project /absolute/path/to/product --file examples/seo-project.json
-node bin/stepwise.mjs advise --project /absolute/path/to/product --stage review --task "Review code within my budget"
-node bin/stepwise.mjs research --project /absolute/path/to/product --task "Validate demand for my SEO reporting product"
-node bin/stepwise.mjs remember --project /absolute/path/to/product --file examples/decision.json
-node bin/stepwise.mjs recipe --project /absolute/path/to/product --file examples/recipe.json
+claude --plugin-dir /absolute/path/to/stepwise-architect
 ```
 
-Project paths above are inputs: replace them with your actual folder. Only `init`, `remember` and `recipe` write state. Add `.stepwise/` to that product's `.gitignore` before using real project details. The core writes local plain JSON; do not store secrets or customer records there.
+Then ask:
 
-## What it helps with
-
-| Current step | Adviser output |
-| --- | --- |
-| Market research and validation | Queries, evidence fields, competitor comparison method and interview experiment |
-| Planning and architecture | A bounded next step, constraints, alternatives and decision criteria |
-| Generic-looking UI | A workflow to inspect actual pages, improve design and verify results |
-| Coding and review | Existing assistant and suitable checks compared with paid alternatives |
-| Agents and AI quality | Bounded workflow, retries, evaluation and total usage cost |
-| Database and hosting | Requirement checks, managed versus self-hosted trade-offs |
-| Automation and marketing | Small experiments, repeated jobs and measurable activation |
-| Ongoing operations | Revisit saved decisions when workload, needs or official tools change |
-
-There are **20 curated tool candidates and 15 stage workflows**. They are starting points, not universal rankings. Recommendations use task tags, existing tools and explicit constraints. The assistant must verify project-specific fit, current capabilities and prices.
-
-## Install in your assistant
-
-See [the installation guide](docs/INSTALL.md) for Claude Code plugins, the Codex marketplace, Gemini CLI extensions, and direct MCP fallback. Run `npm ci --ignore-scripts` in the installed copy before starting its server. Package managers differ in whether they install dependencies automatically; do not assume they do.
-
-Claude Code users can add this source with `/plugin install stepwise-architect --marketplace SoumaCloud/stepwise-architect`. For this alpha, the prepared local-clone route in the installation guide makes dependency setup easier to verify.
-
-Ask your assistant:
-
-> Use project-adviser for my current product. Read its saved context. Help me choose a lower-cost review workflow, explain the trade-offs, verify current official sources, and prepare one small experiment. Save the decision after I accept it.
-
-## Architecture
-
-```mermaid
-flowchart LR
-  A[Claude Code / Codex / Gemini CLI] --> B[Project adviser skill]
-  B --> C[Local MCP server or CLI]
-  C --> D[Project profile and decision memory]
-  C --> E[Curated tool catalog and workflows]
-  C --> F[Cost comparison calculator]
-  A --> G[Host search and browser tools]
-  G --> H[Current sources and observed evidence]
+```text
+/stepwise-architect:project-adviser Choose a cost-effective review workflow for this product
 ```
 
-## Honest limits
+The skill reads the saved context, calls Rust and verifies current evidence. It does not auto-start the Node MCP server.
 
-- Market research is a **plan** until the host assistant actually searches and collects sources. Reddit, X and other sites may restrict access.
-- The catalog is manually curated and date-stamped. There is no automatic daily feed or live price scraper.
-- Local-only, sensitive-data and subscription constraints filter known conflicts. Unknown metadata remains a verification requirement. This is not a security audit or regulatory certification.
-- The cost engine uses your rates and quantities in one currency for the same workload. It cannot validate the truth of those inputs. Existing subscriptions, model calls and external services can still cost money.
-- No automatic tool installation, external posting, purchases, telemetry or source-code scanning. The host may share MCP results with its model provider under its own settings.
-- No live architecture dashboard yet. A browsable decision graph and measured outcome tracking are later milestones.
-- Client manifests are provided for all three platforms; see [validation status](docs/VALIDATION.md) for what was actually run. Public directory approval is separate from publishing this repo.
+To package a standalone skill for the same operating system and CPU as your build machine:
 
-## Contribute and test
+```sh
+./scripts/package-claude-skill.sh /absolute/output/project-adviser.tar.gz
+```
 
-MIT licensed, with no signup required for the local core. Try one real workflow, then open a GitHub issue with your stage, constraints, existing tools, useful or unsuitable recommendation, source URLs and measured outcome. Remove confidential details. Stars help discovery; repeat use and better project outcomes are the product test.
+Extract the archive's `project-adviser/` folder into a project's `.claude/skills/` directory, then invoke `/project-adviser`. It contains the Rust binary, launcher, instructions and guide. Recipients do not need Rust or Node to run a matching native executable. Build separate archives for other platforms; macOS ARM64 binaries do not run on Linux or Windows. The launcher needs a POSIX shell.
 
-See [the day-wise plan](docs/ROADMAP.md), [contribution guide](CONTRIBUTING.md) and [security notes](SECURITY.md).
+Source marketplace install: `/plugin install stepwise-architect --marketplace SoumaCloud/stepwise-architect`. Build Rust in the actual installed plugin copy. Public directory approval is separate from hosting this repo. See [installation details](docs/INSTALL.md).
+
+## Adapt to project changes
+
+Copy `examples/seo-project.json` and replace it with your actual product, tools and requirements. Initialize an explicit existing project directory:
+
+```sh
+./target/release/stepwise init --project /absolute/product --file examples/seo-project.json
+./target/release/stepwise advise --project /absolute/product --stage review --task "Review code within my budget"
+./target/release/stepwise status --project /absolute/product
+```
+
+When requirements change, read the saved profile and preserve unchanged fields in a complete revised object:
+
+```sh
+./target/release/stepwise update-profile --project /absolute/product --file /absolute/revised-profile.json
+./target/release/stepwise advise --project /absolute/product --stage database --task "Revisit the database under my new data restrictions"
+```
+
+The next recommendation uses the revised context. Earlier decisions and recipes remain available. Skill instructions can be edited independently of the executable. There is no automatic self-modification or background monitoring.
+
+Other commands:
+
+```sh
+./target/release/stepwise research --project /absolute/product --task "Validate demand for this idea"
+./target/release/stepwise compare-costs --file examples/costs.json
+./target/release/stepwise remember --project /absolute/product --file examples/decision.json
+./target/release/stepwise recipe --project /absolute/product --file examples/recipe.json
+```
+
+The cost example uses invented USD inputs: **160 current, 115 proposed and 45 estimated monthly saving**, with 60 switching cost and about 1.33 months payback. Replace every rate and quantity with comparable actual workload inputs. These are not vendor prices or verified savings.
+
+## Coverage and limitations
+
+There are **20 curated candidates and 15 workflows**, covering research, validation, planning, architecture, UI, coding, review, agents, database, testing, automation, deployment, marketing, operations and costs. Ranking uses task tags, existing tools and explicit constraints. Unknown metadata remains a check. Claude must verify exact project fit, current capabilities and pricing.
+
+- Only `init`, `update-profile`, `remember` and `recipe` write project state. The helper makes no network calls, launches no child commands and emits no telemetry.
+- State is plain local JSON in `.stepwise/`, compatible with the older Node bridge. Ignore it in the product's Git history. Do not store secrets or customer records there.
+- Claude can see command results and may process them with its model provider. A sensitive-data flag does not change Claude's own settings. This is not a filesystem sandbox or a compliance certification.
+- Research remains a plan until Claude collects evidence. The bundled catalog is not a live feed. Daily updates, billing imports and an architecture dashboard are later milestones.
+- Passing CLI checks does not prove that every model session follows the skill or produces good architecture advice. Native model-driven evaluations are still needed.
+
+## Development
+
+```sh
+cargo fmt --check
+cargo clippy --locked --all-targets -- -D warnings
+cargo test --locked
+```
+
+For the optional legacy bridge, use Node.js 22+, `npm ci --ignore-scripts`, `npm test` and `npm run check`.
+
+See [validation](docs/VALIDATION.md), [the day-wise plan](docs/ROADMAP.md), [competition notes](docs/MARKET_NOTES.md), [contributing](CONTRIBUTING.md) and [security](SECURITY.md).
+
+MIT licensed. No signup is required for the local helper. Claude and external services follow their own plans and terms.

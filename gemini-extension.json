@@ -1,1 +1,16 @@
-{"name":"stepwise-architect","version":"0.1.0","description":"Project-aware tool advice and cost comparisons for indie builders.","contextFileName":"GEMINI.md","mcpServers":{"stepwise":{"command":"node","args":["${extensionPath}/bin/stepwise.mjs","mcp"],"cwd":"${extensionPath}"}}}
+{
+  "name": "stepwise-architect",
+  "version": "0.2.0",
+  "description": "Project-aware tool advice and cost comparisons for indie builders.",
+  "contextFileName": "GEMINI.md",
+  "mcpServers": {
+    "stepwise": {
+      "command": "node",
+      "args": [
+        "${extensionPath}/bin/stepwise.mjs",
+        "mcp"
+      ],
+      "cwd": "${extensionPath}"
+    }
+  }
+}

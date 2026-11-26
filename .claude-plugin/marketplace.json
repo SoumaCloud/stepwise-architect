@@ -1,1 +1,17 @@
-{"name":"stepwise-architect","owner":{"name":"Stepwise Architect contributors"},"metadata":{"description":"Free project-aware architecture advice and workflow tools for indie builders."},"plugins":[{"name":"stepwise-architect","source":"./","description":"Project-aware tool advice and cost comparisons for indie builders.","version":"0.1.0"}]}
+{
+  "name": "stepwise-architect",
+  "owner": {
+    "name": "Stepwise Architect contributors"
+  },
+  "metadata": {
+    "description": "Free project-aware architecture advice and workflow tools for indie builders."
+  },
+  "plugins": [
+    {
+      "name": "stepwise-architect",
+      "source": "./",
+      "description": "Project-aware tool advice and cost comparisons for indie builders.",
+      "version": "0.2.0"
+    }
+  ]
+}

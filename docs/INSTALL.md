@@ -1,74 +1,68 @@
 # Install and test
 
-Node.js 22+ and npm are required. This alpha is distributed from source, not published on npm. First run `npm ci --ignore-scripts` in the repository directory. To avoid global installation, invoke `node /absolute/path/to/stepwise-architect/bin/stepwise.mjs` directly. The CLI demo itself has no external dependencies; MCP requires the installed SDK.
+## Claude Code with Rust
 
-## Claude Code
-
-For a local test, from the repository directory:
+Use a current stable Rust toolchain for source builds. This version was tested with Rust 1.100.0. From the cloned repository:
 
 ```sh
+cargo build --release --locked
+./target/release/stepwise demo
+cargo test --locked
 claude plugin validate .
 claude --plugin-dir .
 ```
 
-Invoke the bundled skill as `/stepwise-architect:project-adviser` or describe a project-aware tool-selection task. A repository marketplace is included. Once this repository is on GitHub, users can add its owner/repository as a marketplace with `/plugin marketplace add`, then install `stepwise-architect@stepwise-architect` using `/plugin install`.
+Invoke `/stepwise-architect:project-adviser` with the current product task. The skill calls `scripts/stepwise.sh` relative to its installed directory. Claude substitutes `${CLAUDE_SKILL_DIR}` in the skill body. The default `.mcp.json` has no servers; Node is not needed for this path.
 
-Dependency setup matters: a marketplace may copy the plugin into a new cache folder without `node_modules`. Run `npm ci --ignore-scripts` in that installed folder before enabling its MCP server. For a simpler alpha setup, use `--plugin-dir` on a prepared local clone. `.mcp.json` uses `${CLAUDE_PLUGIN_ROOT}` so the server script remains relative to the plugin's installed location.
+Source marketplace install: `/plugin install stepwise-architect --marketplace SoumaCloud/stepwise-architect`. A source install requires a Rust build in the actual installed cache copy because compiled `target/` files are not committed. The launcher reports the required build command when the helper is missing.
 
-## Codex
+## Standalone native skill
 
-The repository includes a portable `plugin.json`, `mcp.json`, skills and a repo marketplace at `.agents/plugins/marketplace.json`.
+From a clone with Rust installed:
 
 ```sh
-codex plugin marketplace add /absolute/path/to/stepwise-architect
+./scripts/package-claude-skill.sh /absolute/output/project-adviser.tar.gz
 ```
 
-Open Plugins in the desktop app, choose Stepwise Architect as the source, install and enable the plugin, then test it in a new chat. Restart if the new local source has not appeared. Public universal-directory listing is a separate reviewed submission.
+This builds for the current machine and packages `project-adviser/` with its native executable, shell launcher, instructions, guide, license and target information. Extract that folder into a project's `.claude/skills/` directory and invoke `/project-adviser`. A matching archive does not require Rust or Node at runtime.
 
-The portable server uses `${PLUGIN_ROOT}`. Prepare dependencies in the actual installed copy. If your client version cannot load the packaged local server, use the supported direct MCP connection below and use the bundled skill as instructions:
+Native executables require the matching operating system and CPU shown in `BUILD.txt`. Build a separate archive for each platform. The included launcher needs a POSIX shell. Windows users need a compatible Unix environment or can build and run the Rust CLI directly; a native PowerShell launcher is not included.
+
+## Change context or instructions
+
+The profile is read on each task. Use `status --project /absolute/product`, preserve unchanged fields and supply a complete revised profile with `update-profile --project /absolute/product --file revised-profile.json`. Decisions and recipes remain intact. All project directory arguments must be absolute and point to an existing directory.
+
+Edit `SKILL.md` to change Claude's workflow instructions without recompiling Rust. Claude Code detects local skill text changes; use `/reload-skills` if needed. Use `--catalog /absolute/catalog.json` for an explicitly reviewed catalog update. There is no background updater.
+
+## Optional Node MCP bridge
+
+The earlier bridge remains available for Codex, Gemini CLI and existing MCP clients. This separate path requires Node.js 22+ and `npm ci --ignore-scripts` in its actual installed copy. It is not needed by the Claude Rust skill. Do not configure duplicate servers.
+
+For Codex, add the repository source with `codex plugin marketplace add /absolute/path/to/stepwise-architect`, then install from the desktop Plugins UI. The portable `mcp.json` points at the Node bridge using `${PLUGIN_ROOT}`. If the client cannot load a packaged local server, use:
 
 ```sh
 codex mcp add stepwise -- node /absolute/path/to/stepwise-architect/bin/stepwise.mjs mcp
 ```
 
-Do not enable both direct and plugin MCP connections at once. No user-wide Codex settings are modified by merely downloading this repo.
-
-## Gemini CLI
-
-From a prepared local clone:
+For Gemini CLI:
 
 ```sh
 gemini extensions link /absolute/path/to/stepwise-architect
 ```
 
-Restart Gemini CLI if necessary. Use `/stepwise` with your task or ask for the project-adviser skill. The root `gemini-extension.json` and `${extensionPath}` point to this clone's MCP server. Public GitHub distribution can use `gemini extensions install` with the repository URL, followed by dependency setup in the installed copy. The Gemini CLI is not included in this repository.
+The Gemini manifest uses `${extensionPath}`. Restart if required, then use `/stepwise` or ask for project advice. Full native sessions in these clients still need evaluation.
 
-## Any stdio MCP client
+Any stdio MCP client can launch executable `node` with two separate arguments: the absolute path to `bin/stepwise.mjs`, and `mcp`. The bridge exposes advice, research plans, cost comparisons and project memory. It does not provide a Rust MCP server.
 
-Set the executable to `node` and pass two arguments: the absolute path to `bin/stepwise.mjs`, and `mcp`. Keep the executable and arguments separate. Do not use shell interpolation. Example client configuration:
+## Uninstall and data
 
-```json
-{
-  "mcpServers": {
-    "stepwise": {
-      "command": "node",
-      "args": ["/absolute/path/to/stepwise-architect/bin/stepwise.mjs", "mcp"]
-    }
-  }
-}
-```
+Remove the installed skill folder or use the client's plugin manager. Project memory remains in `.stepwise/` until deliberately deleted. It is plain local JSON; ignore it in product Git history and do not store credentials or customer records. Each process has its operating-system permissions; it is not a filesystem sandbox.
 
-The server exposes `advise`, `research_plan`, `compare_costs`, `get_project`, `init_project`, `save_decision`, `save_recipe` and `get_catalog`. Project tools require an explicit path. The server has the file permissions of its process; it is not a filesystem sandbox. Use the host's normal approval controls.
+## Official references
 
-## Uninstall and local data
-
-Remove the plugin/extension or direct MCP entry using your client's manager. Project memory remains in each project's `.stepwise/` directory until you deliberately delete it. It is plain local JSON, separate from the plugin installation.
-
-## References
-
-- [Claude plugin manifest reference](https://code.claude.com/docs/en/plugins/manifest-reference)
-- [OpenAI plugin packaging and marketplaces](https://developers.openai.com/plugins/build/plugins)
+- [Claude Code skills and supporting files](https://code.claude.com/docs/en/skills)
+- [Claude plugin reference](https://code.claude.com/docs/en/plugins/manifest-reference)
+- [OpenAI plugin packaging](https://developers.openai.com/plugins/build/plugins)
 - [Gemini extension reference](https://geminicli.com/docs/extensions/reference/)
-- [Agent Plugins MCP runtime](https://agent-plugins.org/)
 
-Instructions checked against official documentation on 26 November 2026. Host versions and directory policies can change.
+Instructions checked 26 November 2026. Client features and marketplace policies can change.

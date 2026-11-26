@@ -1,5 +1,17 @@
 # Validation status
 
+## Rust Claude skill 0.2.0
+
+The Claude path now uses the bundled skill and a native Rust CLI directly. Its default Claude MCP configuration is empty. The optional Node MCP bridge remains a separate compatibility path.
+
+Local validation on Rust 1.100.0: 18 integration tests passed. These cover current-task relevance, hard constraints, unknown data flow, date checks, catalog updates, cost arithmetic, missing/invalid/overflowing rates, forecast labels, local state, explicit profile changes, retained decisions, lock contention, symlink refusal, stdin JSON and paths with spaces. A smoke test runs the compiled executable with Node absent from PATH.
+
+`cargo fmt --check` and `cargo clippy --locked --all-targets -- -D warnings` passed. Standalone archive packaging and the source skill launcher are checked separately during delivery. CI now includes Rust formatting, Clippy, tests, a release build and the launcher demo, alongside the existing Node bridge tests.
+
+The skill uses Claude Code's documented skill-directory substitution. Passing these checks does not establish that a model session will always follow the instructions, or validate real customer demand, current third-party prices or measured savings.
+
+## Initial Node alpha history
+
 Build date: 26 November 2026. Version: 0.1.0 experimental alpha.
 
 ## Core and protocol checks

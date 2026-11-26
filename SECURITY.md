@@ -1,6 +1,8 @@
 # Security and data
 
-This experimental alpha is not independently audited. Its CLI and MCP server perform no network requests, execute no child commands and do not read source code or environment files. They operate on explicit profile inputs and `.stepwise` state files. They reject symlinked state directories/files and use atomic writes with a fail-fast record lock. This is not a sandbox; the Node process still has its operating-system permissions.
+This experimental alpha is not independently audited. Its Rust CLI and optional Node MCP server perform no network requests, execute no child commands and do not read source code or environment files. They operate on explicit profile inputs and `.stepwise` state files. They reject symlinked state directories/files and use atomic writes with a fail-fast record lock. This is not a sandbox; each process still has its operating-system permissions. Rust JSON reads are bounded to 8 MiB.
+
+The Claude skill invokes Rust through a shell launcher. Source setup and archive packaging invoke Cargo, which may download dependencies. Native executables require a matching operating system and CPU. The skill does not pre-approve shell commands with broad allowed-tools rules; host permissions still apply. Explicitly selected catalog updates remain untrusted input.
 
 MCP output is visible to the host assistant and may be processed by its model provider. Saved profiles, decisions and recipes are plain text JSON on disk. Do not put secrets, personal customer data or banking records in them. Ignore `.stepwise/` in the product repository. A sensitive-data flag does not change the host assistant's own data handling.
 

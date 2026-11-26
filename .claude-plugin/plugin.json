@@ -1,1 +1,9 @@
-{"name":"stepwise-architect","version":"0.1.0","description":"Project-aware tool advice and cost comparisons for indie builders.","author":{"name":"Stepwise Architect contributors"},"license":"MIT"}
+{
+  "name": "stepwise-architect",
+  "version": "0.2.0",
+  "description": "Claude Code project adviser skill with a local Rust helper for tool choices, context and costs.",
+  "author": {
+    "name": "Stepwise Architect contributors"
+  },
+  "license": "MIT"
+}
