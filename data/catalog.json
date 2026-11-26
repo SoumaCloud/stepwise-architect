@@ -3,25 +3,466 @@
   "reviewedOn": "2026-11-26",
   "notice": "Curated candidate catalog. Documentation review is not a security audit or performance benchmark. Prices must be checked before recommending a purchase. No affiliate ranking.",
   "tools": [
-    {"id":"existing-assistant","name":"Your existing coding assistant","stages":["research","planning","coding","review","agents","marketing"],"tags":["prompt","review","research","plan","agent","budget"],"runsLocal":null,"requiresSubscription":null,"externalData":true,"existingByDefault":true,"url":"https://code.claude.com/docs/en/overview","why":"Try the assistant and tools you already have before adding another subscription.","tradeoff":"Usage limits and model costs still apply. Independent review and external evidence may require other tools.","setup":"Use the prepared workflow in your existing client. Check which search, browser and review tools that client actually provides."},
-    {"id":"firecrawl","name":"Firecrawl","stages":["research","marketing"],"tags":["crawl","scrape","competitor","website","research"],"runsLocal":false,"requiresSubscription":null,"externalData":true,"url":"https://docs.firecrawl.dev/","why":"Candidate for structured collection from multiple public web pages.","tradeoff":"Check credits, site access, API costs, and whether existing browser/search tools are sufficient.","setup":"Read current official setup instructions and choose only the collection scope needed for the research."},
-    {"id":"penpot","name":"Penpot","stages":["design"],"tags":["design","ui","website","generic","figma","visual"],"runsLocal":true,"requiresSubscription":false,"externalData":null,"url":"https://penpot.app/","why":"An open-source design candidate when the task needs editable design assets and a shared visual system.","tradeoff":"Self-hosting creates maintenance work; hosted service terms and integration details need verification.","setup":"Choose hosted or self-hosted deployment, establish visual requirements, then verify the current agent integration."},
-    {"id":"playwright","name":"Playwright","stages":["design","testing","coding"],"tags":["browser","ui","website","screenshot","test","frontend"],"runsLocal":true,"requiresSubscription":false,"externalData":false,"url":"https://playwright.dev/","why":"Inspect and test the actual browser experience rather than judging generated source alone.","tradeoff":"Browsers consume local resources. Tests need task-specific assertions and maintenance.","setup":"Use the official CLI or MCP integration supported by the host. Review browser results against the product brief."},
-    {"id":"semgrep","name":"Semgrep Community Edition","stages":["review","testing"],"tags":["security","review","static","scan","code"],"runsLocal":true,"requiresSubscription":false,"externalData":false,"url":"https://semgrep.dev/docs/semgrep-ce/overview","why":"Candidate for deterministic local static checks alongside an assistant review.","tradeoff":"Rules and language coverage vary; static scans do not replace human or architectural judgment.","setup":"Verify current language/rule support and run a scoped local scan before adding it to CI."},
-    {"id":"coderabbit","name":"CodeRabbit","stages":["review"],"tags":["review","pull request","pr","team","github"],"runsLocal":false,"requiresSubscription":null,"externalData":true,"url":"https://www.coderabbit.ai/pricing","why":"Candidate when integrated PR review is valuable to the team's actual workflow.","tradeoff":"Check current plans, review coverage, code access and pricing before comparing against local checks or existing-agent review.","setup":"Compare the same representative PR against the existing review process before subscribing or replacing it."},
-    {"id":"github-actions","name":"GitHub Actions","stages":["coding","review","testing","deployment","automation"],"tags":["ci","test","github","deploy","automation","review"],"runsLocal":false,"requiresSubscription":null,"externalData":true,"url":"https://docs.github.com/en/actions","why":"Automate repeatable checks close to the repository when GitHub is already in use.","tradeoff":"Runner minutes, storage and account terms can create charges; workflows require maintenance.","setup":"Reuse relevant existing checks. Verify current billing and repository permissions before adding jobs."},
-    {"id":"superpowers","name":"Superpowers","stages":["planning","coding","review","agents"],"tags":["agent","workflow","plan","skill","review"],"runsLocal":true,"requiresSubscription":false,"externalData":null,"url":"https://github.com/obra/superpowers","why":"Candidate for structured planning, implementation and review workflows in an existing coding assistant.","tradeoff":"Extra workflow steps and agents consume time and model usage; evaluate whether that overhead helps this task.","setup":"Use current client-specific installation instructions. Start with one relevant workflow."},
-    {"id":"promptfoo","name":"Promptfoo","stages":["testing","agents","cost"],"tags":["eval","model","quality","prompt","agent","cost"],"runsLocal":true,"requiresSubscription":false,"externalData":null,"url":"https://www.promptfoo.dev/docs/intro/","why":"Evaluate a proposed prompt or model change on representative inputs.","tradeoff":"Model calls for evaluations may cost money; quality criteria still need to be defined for the product.","setup":"Create a small task-specific dataset and compare the existing and proposed approach under the same conditions."},
-    {"id":"langfuse","name":"Langfuse","stages":["agents","cost","operations","testing"],"tags":["trace","token","model","cost","eval","observability"],"runsLocal":true,"requiresSubscription":null,"externalData":null,"url":"https://langfuse.com/docs","why":"Candidate for understanding which AI calls drive cost, latency and failures.","tradeoff":"Hosted service pricing or self-hosting operations add cost. Trace content can include sensitive data.","setup":"Choose deployment and data capture deliberately. Tag requests by feature before using cost summaries."},
-    {"id":"postgres","name":"PostgreSQL","stages":["database","architecture"],"tags":["database","sql","connection","data","backend"],"runsLocal":true,"requiresSubscription":false,"externalData":false,"url":"https://www.postgresql.org/docs/","why":"A database candidate when relational data and existing team skills fit the product.","tradeoff":"Operating a database includes backups, updates, availability and recovery responsibilities.","setup":"Define the data model and recovery needs, then compare managed and self-operated options."},
-    {"id":"supabase","name":"Supabase","stages":["database","architecture","coding"],"tags":["database","auth","storage","backend","postgres"],"runsLocal":true,"requiresSubscription":null,"externalData":null,"url":"https://supabase.com/docs","why":"Compare a combined database, authentication and storage platform with separate services.","tradeoff":"Verify current limits, deployment choices, region, data policies and growth costs. Bundling is not automatically cheaper.","setup":"Choose the required services only and verify access controls with the actual tenant/data model."},
-    {"id":"neon","name":"Neon","stages":["database","architecture"],"tags":["database","postgres","branch","backend"],"runsLocal":false,"requiresSubscription":null,"externalData":true,"url":"https://neon.com/docs","why":"A managed PostgreSQL candidate to compare against the project's current database arrangement.","tradeoff":"Check compute, storage, transfer, region and account limits at the intended usage.","setup":"Model the workload and verify current connection and pricing guidance before migrating."},
-    {"id":"cloudflare-workers","name":"Cloudflare Workers","stages":["deployment","architecture"],"tags":["host","hosting","deploy","edge","serverless"],"runsLocal":false,"requiresSubscription":null,"externalData":true,"url":"https://developers.cloudflare.com/workers/","why":"A deployment candidate when runtime and application requirements fit.","tradeoff":"Runtime limits, data placement, integrations and usage pricing need verification.","setup":"Check runtime compatibility and estimate requests, compute, storage and transfer before deployment."},
-    {"id":"vercel","name":"Vercel","stages":["deployment","architecture"],"tags":["host","hosting","deploy","next","frontend"],"runsLocal":false,"requiresSubscription":null,"externalData":true,"url":"https://vercel.com/docs","why":"A deployment candidate when preview workflows and supported application frameworks fit the project.","tradeoff":"Verify commercial terms, seats and metered compute/transfer at the expected workload.","setup":"Compare a preview deployment with the current host using the same application and usage assumptions."},
-    {"id":"posthog","name":"PostHog","stages":["marketing","operations"],"tags":["analytics","conversion","funnel","launch","experiment"],"runsLocal":null,"requiresSubscription":null,"externalData":true,"url":"https://posthog.com/docs","why":"Measure the user behavior needed to judge a launch or product experiment.","tradeoff":"Event volume and enabled products can affect cost. Only collect data the project needs.","setup":"Define the decision and events first, then check current pricing and data handling requirements."},
-    {"id":"n8n","name":"n8n","stages":["automation","marketing","operations"],"tags":["workflow","automation","repeat","integration","schedule"],"runsLocal":true,"requiresSubscription":null,"externalData":null,"url":"https://docs.n8n.io/","why":"A workflow automation candidate for repeated handoffs across services.","tradeoff":"Compare execution pricing, license terms and self-hosting maintenance with a small script or scheduled job.","setup":"Map triggers, inputs and side effects. Build and test a single bounded workflow first."},
-    {"id":"resend","name":"Resend","stages":["marketing","architecture","operations"],"tags":["email","notification","transactional","launch"],"runsLocal":false,"requiresSubscription":null,"externalData":true,"url":"https://resend.com/docs","why":"An email delivery candidate when transactional email is required.","tradeoff":"Check volume, domain setup, retention and current pricing. Delivery provider choice does not solve messaging strategy.","setup":"Establish domain authentication and test a transactional message before connecting production events."},
-    {"id":"local-script","name":"A small script or scheduled job","stages":["automation","research","operations"],"tags":["automation","repeat","schedule","budget","simple"],"runsLocal":true,"requiresSubscription":false,"externalData":false,"url":"https://nodejs.org/api/","why":"Consider a small local operation when the task is narrow and an automation platform would add overhead.","tradeoff":"Someone must own scheduling, credentials, retries, errors and maintenance.","setup":"Specify inputs, output, retries and the failure path. Keep the operation narrow and observable."},
-    {"id":"manual-validation","name":"Direct customer interviews and a small validation experiment","stages":["validation","research","planning"],"tags":["customer","interview","validate","market","idea"],"runsLocal":true,"requiresSubscription":false,"externalData":false,"url":"https://www.ycombinator.com/library/6g-how-to-talk-to-users","why":"Collect evidence about a specific customer's recent problem before buying a larger research stack.","tradeoff":"Requires recruiting and interpretation. A few interviews are not proof of a whole market.","setup":"Ask about actual behavior, alternatives and costs; record evidence and unresolved assumptions."}
+    {
+      "id": "existing-assistant",
+      "name": "Your existing coding assistant",
+      "stages": [
+        "research",
+        "planning",
+        "coding",
+        "review",
+        "agents",
+        "marketing"
+      ],
+      "tags": [
+        "prompt",
+        "review",
+        "research",
+        "plan",
+        "agent",
+        "budget"
+      ],
+      "runsLocal": null,
+      "requiresSubscription": null,
+      "externalData": true,
+      "existingByDefault": true,
+      "url": "https://code.claude.com/docs/en/overview",
+      "why": "Try the assistant and tools you already have before adding another subscription.",
+      "tradeoff": "Usage limits and model costs still apply. Independent review and external evidence may require other tools.",
+      "setup": "Use the prepared workflow in your existing client. Check which search, browser and review tools that client actually provides."
+    },
+    {
+      "id": "firecrawl",
+      "name": "Firecrawl hosted API",
+      "stages": [
+        "research",
+        "marketing"
+      ],
+      "tags": [
+        "crawl",
+        "scrape",
+        "competitor",
+        "website",
+        "research"
+      ],
+      "runsLocal": false,
+      "requiresSubscription": null,
+      "externalData": true,
+      "url": "https://docs.firecrawl.dev/",
+      "why": "Candidate for structured collection from multiple public web pages.",
+      "tradeoff": "Check credits, site access, API costs, and whether existing browser/search tools are sufficient.",
+      "setup": "Read current official setup instructions and choose only the collection scope needed for the research."
+    },
+    {
+      "id": "penpot",
+      "name": "Penpot",
+      "stages": [
+        "design"
+      ],
+      "tags": [
+        "design",
+        "ui",
+        "website",
+        "generic",
+        "figma",
+        "visual"
+      ],
+      "runsLocal": true,
+      "requiresSubscription": false,
+      "externalData": null,
+      "url": "https://penpot.app/",
+      "why": "An open-source design candidate when the task needs editable design assets and a shared visual system.",
+      "tradeoff": "Self-hosting creates maintenance work; hosted service terms and integration details need verification.",
+      "setup": "Choose hosted or self-hosted deployment, establish visual requirements, then verify the current agent integration."
+    },
+    {
+      "id": "playwright",
+      "name": "Playwright",
+      "stages": [
+        "design",
+        "testing",
+        "coding"
+      ],
+      "tags": [
+        "browser",
+        "ui",
+        "website",
+        "screenshot",
+        "test",
+        "frontend"
+      ],
+      "runsLocal": true,
+      "requiresSubscription": false,
+      "externalData": false,
+      "url": "https://playwright.dev/",
+      "why": "Inspect and test the actual browser experience rather than judging generated source alone.",
+      "tradeoff": "Browsers consume local resources. Tests need task-specific assertions and maintenance.",
+      "setup": "Use the official CLI or MCP integration supported by the host. Review browser results against the product brief."
+    },
+    {
+      "id": "semgrep",
+      "name": "Semgrep Community Edition",
+      "stages": [
+        "review",
+        "testing"
+      ],
+      "tags": [
+        "security",
+        "review",
+        "static",
+        "scan",
+        "code"
+      ],
+      "runsLocal": true,
+      "requiresSubscription": false,
+      "externalData": null,
+      "url": "https://semgrep.dev/products/community-edition/",
+      "why": "Candidate for deterministic local static checks alongside an assistant review.",
+      "tradeoff": "Rules and language coverage vary; static scans do not replace human or architectural judgment. Verify metrics, rule downloads and data flow. Use local rules and disable metrics when external connections are prohibited.",
+      "setup": "Verify current language/rule support and run a scoped local scan before adding it to CI."
+    },
+    {
+      "id": "coderabbit",
+      "name": "CodeRabbit",
+      "stages": [
+        "review"
+      ],
+      "tags": [
+        "review",
+        "pull request",
+        "pr",
+        "team",
+        "github"
+      ],
+      "runsLocal": false,
+      "requiresSubscription": null,
+      "externalData": true,
+      "url": "https://www.coderabbit.ai/pricing",
+      "why": "Candidate when integrated PR review is valuable to the team's actual workflow.",
+      "tradeoff": "Check current plans, review coverage, code access and pricing before comparing against local checks or existing-agent review.",
+      "setup": "Compare the same representative PR against the existing review process before subscribing or replacing it."
+    },
+    {
+      "id": "github-actions",
+      "name": "GitHub Actions",
+      "stages": [
+        "coding",
+        "review",
+        "testing",
+        "deployment",
+        "automation"
+      ],
+      "tags": [
+        "ci",
+        "test",
+        "github",
+        "deploy",
+        "automation",
+        "review"
+      ],
+      "runsLocal": false,
+      "requiresSubscription": null,
+      "externalData": true,
+      "url": "https://docs.github.com/en/actions",
+      "why": "Automate repeatable checks close to the repository when GitHub is already in use.",
+      "tradeoff": "Runner minutes, storage and account terms can create charges; workflows require maintenance.",
+      "setup": "Reuse relevant existing checks. Verify current billing and repository permissions before adding jobs."
+    },
+    {
+      "id": "superpowers",
+      "name": "Superpowers",
+      "stages": [
+        "planning",
+        "coding",
+        "review",
+        "agents"
+      ],
+      "tags": [
+        "agent",
+        "workflow",
+        "plan",
+        "skill",
+        "review"
+      ],
+      "runsLocal": true,
+      "requiresSubscription": false,
+      "externalData": null,
+      "url": "https://github.com/obra/superpowers",
+      "why": "Candidate for structured planning, implementation and review workflows in an existing coding assistant.",
+      "tradeoff": "Extra workflow steps and agents consume time and model usage; evaluate whether that overhead helps this task.",
+      "setup": "Use current client-specific installation instructions. Start with one relevant workflow."
+    },
+    {
+      "id": "promptfoo",
+      "name": "Promptfoo",
+      "stages": [
+        "testing",
+        "agents",
+        "cost"
+      ],
+      "tags": [
+        "eval",
+        "model",
+        "quality",
+        "prompt",
+        "agent",
+        "cost"
+      ],
+      "runsLocal": true,
+      "requiresSubscription": false,
+      "externalData": null,
+      "url": "https://www.promptfoo.dev/docs/intro/",
+      "why": "Evaluate a proposed prompt or model change on representative inputs.",
+      "tradeoff": "Model calls for evaluations may cost money; quality criteria still need to be defined for the product.",
+      "setup": "Create a small task-specific dataset and compare the existing and proposed approach under the same conditions."
+    },
+    {
+      "id": "langfuse",
+      "name": "Langfuse",
+      "stages": [
+        "agents",
+        "cost",
+        "operations",
+        "testing"
+      ],
+      "tags": [
+        "trace",
+        "token",
+        "model",
+        "cost",
+        "eval",
+        "observability"
+      ],
+      "runsLocal": true,
+      "requiresSubscription": null,
+      "externalData": null,
+      "url": "https://langfuse.com/docs",
+      "why": "Candidate for understanding which AI calls drive cost, latency and failures.",
+      "tradeoff": "Hosted service pricing or self-hosting operations add cost. Trace content can include sensitive data.",
+      "setup": "Choose deployment and data capture deliberately. Tag requests by feature before using cost summaries."
+    },
+    {
+      "id": "postgres",
+      "name": "PostgreSQL",
+      "stages": [
+        "database",
+        "architecture"
+      ],
+      "tags": [
+        "database",
+        "sql",
+        "connection",
+        "data",
+        "backend"
+      ],
+      "runsLocal": true,
+      "requiresSubscription": false,
+      "externalData": false,
+      "url": "https://www.postgresql.org/docs/",
+      "why": "A database candidate when relational data and existing team skills fit the product.",
+      "tradeoff": "Operating a database includes backups, updates, availability and recovery responsibilities.",
+      "setup": "Define the data model and recovery needs, then compare managed and self-operated options."
+    },
+    {
+      "id": "supabase",
+      "name": "Supabase",
+      "stages": [
+        "database",
+        "architecture",
+        "coding"
+      ],
+      "tags": [
+        "database",
+        "auth",
+        "storage",
+        "backend",
+        "postgres"
+      ],
+      "runsLocal": true,
+      "requiresSubscription": null,
+      "externalData": null,
+      "url": "https://supabase.com/docs",
+      "why": "Compare a combined database, authentication and storage platform with separate services.",
+      "tradeoff": "Verify current limits, deployment choices, region, data policies and growth costs. Bundling is not automatically cheaper.",
+      "setup": "Choose the required services only and verify access controls with the actual tenant/data model."
+    },
+    {
+      "id": "neon",
+      "name": "Neon",
+      "stages": [
+        "database",
+        "architecture"
+      ],
+      "tags": [
+        "database",
+        "postgres",
+        "branch",
+        "backend"
+      ],
+      "runsLocal": false,
+      "requiresSubscription": null,
+      "externalData": true,
+      "url": "https://neon.com/docs",
+      "why": "A managed PostgreSQL candidate to compare against the project's current database arrangement.",
+      "tradeoff": "Check compute, storage, transfer, region and account limits at the intended usage.",
+      "setup": "Model the workload and verify current connection and pricing guidance before migrating."
+    },
+    {
+      "id": "cloudflare-workers",
+      "name": "Cloudflare Workers",
+      "stages": [
+        "deployment",
+        "architecture"
+      ],
+      "tags": [
+        "host",
+        "hosting",
+        "deploy",
+        "edge",
+        "serverless"
+      ],
+      "runsLocal": false,
+      "requiresSubscription": null,
+      "externalData": true,
+      "url": "https://developers.cloudflare.com/workers/",
+      "why": "A deployment candidate when runtime and application requirements fit.",
+      "tradeoff": "Runtime limits, data placement, integrations and usage pricing need verification.",
+      "setup": "Check runtime compatibility and estimate requests, compute, storage and transfer before deployment."
+    },
+    {
+      "id": "vercel",
+      "name": "Vercel",
+      "stages": [
+        "deployment",
+        "architecture"
+      ],
+      "tags": [
+        "host",
+        "hosting",
+        "deploy",
+        "next",
+        "frontend"
+      ],
+      "runsLocal": false,
+      "requiresSubscription": null,
+      "externalData": true,
+      "url": "https://vercel.com/docs",
+      "why": "A deployment candidate when preview workflows and supported application frameworks fit the project.",
+      "tradeoff": "Verify commercial terms, seats and metered compute/transfer at the expected workload.",
+      "setup": "Compare a preview deployment with the current host using the same application and usage assumptions."
+    },
+    {
+      "id": "posthog",
+      "name": "PostHog",
+      "stages": [
+        "marketing",
+        "operations"
+      ],
+      "tags": [
+        "analytics",
+        "conversion",
+        "funnel",
+        "launch",
+        "experiment"
+      ],
+      "runsLocal": null,
+      "requiresSubscription": null,
+      "externalData": true,
+      "url": "https://posthog.com/docs",
+      "why": "Measure the user behavior needed to judge a launch or product experiment.",
+      "tradeoff": "Event volume and enabled products can affect cost. Only collect data the project needs.",
+      "setup": "Define the decision and events first, then check current pricing and data handling requirements."
+    },
+    {
+      "id": "n8n",
+      "name": "n8n",
+      "stages": [
+        "automation",
+        "marketing",
+        "operations"
+      ],
+      "tags": [
+        "workflow",
+        "automation",
+        "repeat",
+        "integration",
+        "schedule"
+      ],
+      "runsLocal": true,
+      "requiresSubscription": null,
+      "externalData": null,
+      "url": "https://docs.n8n.io/",
+      "why": "A workflow automation candidate for repeated handoffs across services.",
+      "tradeoff": "Compare execution pricing, license terms and self-hosting maintenance with a small script or scheduled job.",
+      "setup": "Map triggers, inputs and side effects. Build and test a single bounded workflow first."
+    },
+    {
+      "id": "resend",
+      "name": "Resend",
+      "stages": [
+        "marketing",
+        "architecture",
+        "operations"
+      ],
+      "tags": [
+        "email",
+        "notification",
+        "transactional",
+        "launch"
+      ],
+      "runsLocal": false,
+      "requiresSubscription": null,
+      "externalData": true,
+      "url": "https://resend.com/docs",
+      "why": "An email delivery candidate when transactional email is required.",
+      "tradeoff": "Check volume, domain setup, retention and current pricing. Delivery provider choice does not solve messaging strategy.",
+      "setup": "Establish domain authentication and test a transactional message before connecting production events."
+    },
+    {
+      "id": "local-script",
+      "name": "A small script or scheduled job",
+      "stages": [
+        "automation",
+        "research",
+        "operations"
+      ],
+      "tags": [
+        "automation",
+        "repeat",
+        "schedule",
+        "budget",
+        "simple"
+      ],
+      "runsLocal": true,
+      "requiresSubscription": false,
+      "externalData": false,
+      "url": "https://nodejs.org/api/",
+      "why": "Consider a small local operation when the task is narrow and an automation platform would add overhead.",
+      "tradeoff": "Someone must own scheduling, credentials, retries, errors and maintenance.",
+      "setup": "Specify inputs, output, retries and the failure path. Keep the operation narrow and observable."
+    },
+    {
+      "id": "manual-validation",
+      "name": "Direct customer interviews and a small validation experiment",
+      "stages": [
+        "validation",
+        "research",
+        "planning"
+      ],
+      "tags": [
+        "customer",
+        "interview",
+        "validate",
+        "market",
+        "idea"
+      ],
+      "runsLocal": true,
+      "requiresSubscription": false,
+      "externalData": false,
+      "url": "https://www.ycombinator.com/library/6g-how-to-talk-to-users",
+      "why": "Collect evidence about a specific customer's recent problem before buying a larger research stack.",
+      "tradeoff": "Requires recruiting and interpretation. A few interviews are not proof of a whole market.",
+      "setup": "Ask about actual behavior, alternatives and costs; record evidence and unresolved assumptions."
+    }
   ]
 }
