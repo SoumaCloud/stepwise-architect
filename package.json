@@ -1,0 +1,52 @@
+{
+  "name": "stepwise-architect",
+  "version": "0.1.0",
+  "description": "A free project-aware tool and workflow adviser for Claude Code, Codex, and Gemini CLI.",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "stepwise": "./bin/stepwise.mjs"
+  },
+  "scripts": {
+    "test": "node --test",
+    "demo": "node bin/stepwise.mjs demo",
+    "check": "node scripts/check-package.mjs",
+    "mcp": "node bin/stepwise.mjs mcp"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "zod": "^4.6.7"
+  },
+  "files": [
+    "bin",
+    "src",
+    "data",
+    "skills",
+    "commands",
+    "docs",
+    "examples",
+    "scripts",
+    "plugin.json",
+    "mcp.json",
+    ".mcp.json",
+    ".claude-plugin",
+    ".codex-plugin",
+    ".agents",
+    "gemini-extension.json",
+    "GEMINI.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "claude-code",
+    "codex",
+    "gemini-cli",
+    "mcp",
+    "solution-architect",
+    "developer-tools",
+    "cost-optimization"
+  ]
+}

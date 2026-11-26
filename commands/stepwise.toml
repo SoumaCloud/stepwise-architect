@@ -1,0 +1,5 @@
+description = "Get project-aware tool advice for the current development step"
+prompt = """
+Use the project-adviser skill and stepwise MCP tools for this request: {{args}}
+Establish the explicit project path, read its saved context if present, and recommend the smallest useful next step. Check current official sources before price or capability claims. Distinguish a research plan from evidence already collected, and estimated savings from measured outcomes.
+"""

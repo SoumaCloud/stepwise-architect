@@ -1,0 +1,6 @@
+{
+  "currency":"USD","workload":"Hypothetical 1000 equivalent jobs per month. Replace all rates and quantities with your own.",
+  "current":{"basis":"forecast","items":[{"name":"Tool subscriptions","kind":"fixed","monthly":60},{"name":"Model calls including retries","kind":"metered","quantity":20000000,"rate":5,"per":1000000}]},
+  "proposed":{"basis":"forecast","items":[{"name":"Tool subscriptions","kind":"fixed","monthly":15},{"name":"Model calls including retries","kind":"metered","quantity":20000000,"rate":5,"per":1000000}]},
+  "switchingCost":60
+}

@@ -1,0 +1,7 @@
+{
+  "name":"Indie SEO reporting SaaS",
+  "description":"A solo builder creating weekly SEO reports for small businesses",
+  "existingTools":["existing-assistant","github-actions","postgres"],
+  "requirements":["Commercial use allowed","Only public page content in market research","Basic access control and backups"],
+  "constraints":{"monthlyBudget":100,"currency":"USD","noNewSubscription":true,"sensitiveData":false,"localOnly":false}
+}

@@ -1,0 +1,7 @@
+{
+  "$schema":"https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name":"stepwise-architect","version":"0.1.0",
+  "description":"Project-aware tool advice, cost comparisons and reusable workflows for indie builders.",
+  "author":{"name":"Stepwise Architect contributors"},"license":"MIT",
+  "keywords":["architecture","tools","cost","research"]
+}

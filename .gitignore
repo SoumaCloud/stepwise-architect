@@ -1,0 +1,9 @@
+node_modules/
+.stepwise/
+.env
+.env.*
+!.env.example
+*.log
+coverage/
+*.tgz
+.DS_Store

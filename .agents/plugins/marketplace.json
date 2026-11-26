@@ -1,0 +1,1 @@
+{"name":"stepwise-architect","interface":{"displayName":"Stepwise Architect"},"plugins":[{"name":"stepwise-architect","source":{"source":"local","path":"./"},"policy":{"installation":"AVAILABLE","authentication":"ON_INSTALL"},"category":"Productivity"}]}

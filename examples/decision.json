@@ -1,0 +1,1 @@
+{"title":"Trial local review before a paid reviewer","body":"Use the existing assistant plus suitable static checks on five representative PRs. Compare useful findings, false positives, time and total cost. Revisit a paid reviewer if coverage or team workflow warrants it. Price verification and measured outcome are still pending."}

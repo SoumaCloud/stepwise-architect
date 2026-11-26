@@ -1,0 +1,4 @@
+interface:
+  display_name: "Stepwise Architect"
+  short_description: "Choose tools for your project and compare total costs"
+  default_prompt: "Use $project-adviser to recommend the next tool or workflow for my project, with evidence, tradeoffs and cost assumptions."

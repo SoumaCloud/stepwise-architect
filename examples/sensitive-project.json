@@ -1,0 +1,7 @@
+{
+  "name":"Sensitive financial data prototype",
+  "description":"An illustrative internal prototype using synthetic records only",
+  "existingTools":["postgres"],
+  "requirements":["No customer records sent externally","Expert review of access control and audit logging","Validate residency, retention, encryption and recovery requirements"],
+  "constraints":{"monthlyBudget":300,"currency":"USD","localOnly":true,"sensitiveData":true,"noNewSubscription":true}
+}

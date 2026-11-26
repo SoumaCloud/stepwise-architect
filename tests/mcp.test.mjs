@@ -1,0 +1,23 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {Client} from '@modelcontextprotocol/sdk/client/index.js';
+import {StdioClientTransport} from '@modelcontextprotocol/sdk/client/stdio.js';
+import {fileURLToPath} from 'node:url';
+import {mkdtemp,rm} from 'node:fs/promises';
+import {join} from 'node:path';
+import {tmpdir} from 'node:os';
+test('official SDK initializes lists tools and performs a complete project workflow',async t=>{
+  const root=await mkdtemp(join(tmpdir(),'stepwise-mcp-'));
+  const transport=new StdioClientTransport({command:process.execPath,args:[fileURLToPath(new URL('../bin/stepwise.mjs',import.meta.url)),'mcp'],stderr:'pipe'});
+  const client=new Client({name:'stepwise-test',version:'1.0.0'});
+  t.after(async()=>{await client.close();await rm(root,{recursive:true,force:true});});
+  await client.connect(transport);const {tools}=await client.listTools();assert.equal(tools.length,8);
+  assert.equal(tools.find(x=>x.name==='init_project').annotations.readOnlyHint,false);
+  const call=async(name,args)=>client.callTool({name,arguments:args});
+  assert.ok(!(await call('init_project',{project:root,profile:{name:'MCP test',description:'Tiny SaaS',constraints:{localOnly:true,sensitiveData:true}}})).isError);
+  const result=await call('advise',{project:root,task:'database postgres connection',stage:'database'});
+  const r=JSON.parse(result.content[0].text);assert.equal(r.project,'MCP test');assert.ok(r.rejected.some(x=>x.id==='neon'));
+  assert.ok(!(await call('save_decision',{project:root,title:'Database',body:'Trial local Postgres with synthetic records.'})).isError);
+  const state=JSON.parse((await call('get_project',{project:root})).content[0].text);assert.equal(state.decisions.length,1);
+  const bad=await call('advise',{task:'',stage:'database'});assert.equal(bad.isError,true);
+});
