@@ -14,6 +14,8 @@ The Claude Code native validator passed, with a public-directory icon warning. T
 
 Local tests passed on Node 24.12.0: 17 tests, zero failures. Dependency audit after upgrading Zod reported zero known vulnerabilities. This audit is a point-in-time package check, not an independent security assessment. CI is configured for Node 22 and 24.
 
+The initial [GitHub Actions run](https://github.com/SoumaCloud/stepwise-architect/actions/runs/45801492641) passed on both Node 22 and Node 24, including a clean dependency install, all 17 tests and package checks.
+
 No claims of public marketplace approval, security certification, measured customer savings or validated demand are made by this alpha. The Word build report supplied with the initial delivery records the exact checks run and remaining gaps.
 
 ## Recommendation quality
